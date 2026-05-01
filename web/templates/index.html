@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TerraScope — Infrastructure Drift Detector</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo"><span class="logo-icon">🔭</span><span class="logo-text">TerraScope</span></div>
+        <ul class="nav-links">
+            <li><a href="/" class="active">🏠 Home</a></li>
+            <li><a href="/dashboard">📊 Dashboard</a></li>
+            <li><a href="/baselines">📋 Baselines</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <span class="version">v0.4.0</span>
+            <span class="mimo-badge">MiMo v2.5</span>
+        </div>
+    </nav>
+    <main class="content">
+        <div class="hero">
+            <h1>🔭 TerraScope</h1>
+            <p class="subtitle">Infrastructure Config Drift Detector with AI Analysis</p>
+            <p class="description">Upload Terraform, Kubernetes, or Docker Compose configs. TerraScope detects drift, security misconfigs, and cost issues — powered by MiMo v2.5.</p>
+        </div>
+
+        <div class="card">
+            <h3>📤 Upload Configuration</h3>
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>Scan Name</label>
+                    <input type="text" name="name" placeholder="production-infra-check" class="input">
+                </div>
+                <div class="form-group">
+                    <label>Config Type</label>
+                    <select name="config_type" class="input">
+                        <option value="">Auto-detect</option>
+                        <option value="terraform">Terraform (.tf)</option>
+                        <option value="kubernetes">Kubernetes (YAML)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Upload File</label>
+                    <input type="file" name="config_file" accept=".tf,.yaml,.yml,.json" class="input">
+                </div>
+                <div class="form-group">
+                    <label>Or paste config content</label>
+                    <textarea name="config_content" rows="15" class="input mono" placeholder='resource "aws_instance" "web" { ... }'></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg">🔍 Run Scan</button>
+            </form>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card"><span class="feature-icon">🏗️</span><h3>Terraform</h3><p>HCL config parsing and drift detection</p></div>
+            <div class="feature-card"><span class="feature-icon">☸️</span><h3>Kubernetes</h3><p>YAML manifest analysis and comparison</p></div>
+            <div class="feature-card"><span class="feature-icon">🛡️</span><h3>Security</h3><p>AI-powered security misconfiguration detection</p></div>
+            <div class="feature-card"><span class="feature-icon">💰</span><h3>Cost</h3><p>Identify over-provisioned and costly resources</p></div>
+        </div>
+    </main>
+</body>
+</html>

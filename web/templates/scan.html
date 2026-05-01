@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan #{{.Scan.ID}} — TerraScope</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo"><span class="logo-icon">🔭</span><span class="logo-text">TerraScope</span></div>
+        <ul class="nav-links">
+            <li><a href="/">🏠 Home</a></li>
+            <li><a href="/dashboard">📊 Dashboard</a></li>
+            <li><a href="/baselines">📋 Baselines</a></li>
+        </ul>
+        <div class="sidebar-footer"><span class="version">v0.4.0</span><span class="mimo-badge">MiMo v2.5</span></div>
+    </nav>
+    <main class="content">
+        <div class="breadcrumb"><a href="/dashboard">← Dashboard</a></div>
+        <div class="page-header"><h1>🔍 {{.Scan.Name}}</h1>
+            <div class="meta"><span class="badge">{{.Scan.ConfigType}}</span> <span class="badge badge-{{if eq .Scan.Status "complete"}}success{{end}}">{{.Scan.Status}}</span>
+            <span>{{formatTokens .Scan.TokensUsed}} tokens</span> <span>{{.Scan.ScanTimeMs}}ms</span></div>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card critical"><div class="stat-value">{{.Scan.Critical}}</div><div class="stat-label">🔴 Critical</div></div>
+            <div class="stat-card high"><div class="stat-value">{{.Scan.High}}</div><div class="stat-label">🟠 High</div></div>
+            <div class="stat-card medium"><div class="stat-value">{{.Scan.Medium}}</div><div class="stat-label">🟡 Medium</div></div>
+            <div class="stat-card low"><div class="stat-value">{{.Scan.Low}}</div><div class="stat-label">🟢 Low</div></div>
+        </div>
+        {{if .Drifts}}
+        <div class="card"><h3>Findings ({{len .Drifts}})</h3>
+            {{range .Drifts}}
+            <div class="finding severity-{{.Severity}}">
+                <div class="finding-header">
+                    <span class="severity-badge">{{.Severity}}</span>
+                    <span class="type-badge">{{.DriftType}}</span>
+                    <strong>{{.Resource}}</strong>
+                </div>
+                <p>{{.Description}}</p>
+                {{if .Remediation}}<div class="remediation">💡 {{.Remediation}}</div>{{end}}
+            </div>
+            {{end}}
+        </div>
+        {{end}}
+        <div class="card"><h3>API Access</h3>
+            <pre><code>curl -X POST http://localhost:8080/api/scan -H "Content-Type: application/json" -d '{"name": "my-scan", "config_type": "terraform", "content": "..."}'</code></pre>
+        </div>
+    </main>
+</body>
+</html>

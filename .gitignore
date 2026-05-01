@@ -1,0 +1,8 @@
+terrascope
+*.exe
+*.db
+*.sqlite3
+.env
+vendor/
+.DS_Store
+*.log

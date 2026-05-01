@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baselines — TerraScope</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo"><span class="logo-icon">🔭</span><span class="logo-text">TerraScope</span></div>
+        <ul class="nav-links">
+            <li><a href="/">🏠 Home</a></li>
+            <li><a href="/dashboard">📊 Dashboard</a></li>
+            <li><a href="/baselines" class="active">📋 Baselines</a></li>
+        </ul>
+        <div class="sidebar-footer"><span class="version">v0.4.0</span><span class="mimo-badge">MiMo v2.5</span></div>
+    </nav>
+    <main class="content">
+        <div class="page-header"><h1>📋 Baseline Configurations</h1><p class="subtitle">Known-good configs to compare against</p></div>
+        {{if .Baselines}}
+        <div class="card">
+            <table class="styled-table">
+                <thead><tr><th>ID</th><th>Name</th><th>Type</th><th>Resources</th><th>Created</th></tr></thead>
+                <tbody>
+                {{range .Baselines}}
+                <tr><td>#{{.ID}}</td><td>{{.Name}}</td><td>{{.ConfigType}}</td><td>{{.ResourceCount}}</td><td>{{timeAgo .CreatedAt}}</td></tr>
+                {{end}}
+                </tbody>
+            </table>
+        </div>
+        {{else}}
+        <div class="card"><div class="empty-state">No baselines saved yet. Upload a known-good config to create one.</div></div>
+        {{end}}
+    </main>
+</body>
+</html>

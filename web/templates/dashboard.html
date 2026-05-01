@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — TerraScope</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo"><span class="logo-icon">🔭</span><span class="logo-text">TerraScope</span></div>
+        <ul class="nav-links">
+            <li><a href="/">🏠 Home</a></li>
+            <li><a href="/dashboard" class="active">📊 Dashboard</a></li>
+            <li><a href="/baselines">📋 Baselines</a></li>
+        </ul>
+        <div class="sidebar-footer"><span class="version">v0.4.0</span><span class="mimo-badge">MiMo v2.5</span></div>
+    </nav>
+    <main class="content">
+        <div class="page-header"><h1>📊 Scan History</h1></div>
+        {{if .Scans}}
+        <div class="card">
+            <table class="styled-table">
+                <thead><tr><th>ID</th><th>Name</th><th>Type</th><th>Status</th><th>Drifts</th><th>Tokens</th><th>Time</th></tr></thead>
+                <tbody>
+                {{range .Scans}}
+                <tr class="clickable" onclick="location.href='/scan/{{.ID}}'">
+                    <td>#{{.ID}}</td><td>{{.Name}}</td><td>{{.ConfigType}}</td>
+                    <td><span class="badge badge-{{if eq .Status "complete"}}success{{else}}warning{{end}}">{{.Status}}</span></td>
+                    <td>{{.TotalDrifts}} ({{.Critical}}C {{.High}}H {{.Medium}}M {{.Low}}L)</td>
+                    <td>{{formatTokens .TokensUsed}}</td><td>{{timeAgo .CreatedAt}}</td>
+                </tr>
+                {{end}}
+                </tbody>
+            </table>
+        </div>
+        {{else}}
+        <div class="card"><div class="empty-state">No scans yet. <a href="/">Run your first scan!</a></div></div>
+        {{end}}
+    </main>
+</body>
+</html>
